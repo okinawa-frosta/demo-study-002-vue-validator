@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./bundle.js"></script>
+  </head>
+  <body>
+    <div id="sample">
+      <validator name="vali">
+        <form novalidate @submit="onSubmit()">
+          <section>
+            <h2>Text required</h2>
+            <input type="text" v-validate:name="['required']"><span class="error" v-if="$vali.name.touched &amp;&amp; $vali.name.required"> ERORR</span>
+          </section>
+          <section>
+            <h2>Text multiple required</h2>
+            <input type="text" v-validate:name-first="['required']">
+            <input type="text" v-validate:name-last="['required']"><span class="error" v-if="($vali.nameFirst.touched &amp;&amp; $vali.nameLast.touched) &amp;&amp; ($vali.nameFirst.required || $vali.nameLast.required)"> ERORR</span>
+          </section>
+          <section>
+            <h2>Checkbox required</h2>
+            <input type="checkbox" name="a" v-validate:checkbox="['required']"> A
+            <input type="checkbox" name="b" v-validate:checkbox> B
+            <input type="checkbox" name="c" v-validate:checkbox> C<span class="error" v-if="$vali.checkbox.touched &amp;&amp; $vali.checkbox.required"> ERORR</span>
+          </section>
+          <section>
+            <h2>Radio required</h2>
+            <input type="radio" name="radio" v-validate:radio="['required']"> Man
+            <input type="radio" name="radio" v-validate:radio> Woman
+            <p class="error" v-if="$vali.radio.touched &amp;&amp; $vali.radio.required">ERORR</p>
+          </section>
+          <section>
+            <h2>Select required</h2>
+            <select name="select" v-validate:select="['required']">
+              <option value=""></option>
+              <option value="001">001</option>
+              <option value="002">002</option>
+              <option value="003">003</option>
+            </select>
+            <p class="error" v-if="$vali.select.touched &amp;&amp; $vali.select.required">ERORR</p>
+          </section>
+          <input type="submit" value="Send" v-bind:class="{ 'is-desable': $vali.invalid }">
+        </form>
+      </validator>
+    </div>
+  </body>
+</html>

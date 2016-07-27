@@ -1,0 +1,51 @@
+doctype html
+html(lang="ja")
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    link(rel="stylesheet" href="./style.css")
+    script(src="./bundle.js")
+  body
+    #sample
+      validator(name="vali")
+        form(novalidate @submit="onSubmit()")
+
+          section
+            h2 Text required
+            input(type="text" v-validate:name="['required']")
+            span.error(v-if="$vali.name.touched && $vali.name.required")  ERORR
+
+          section
+            h2 Text multiple required
+            input(type="text" v-validate:name-first="['required']")
+            input(type="text" v-validate:name-last="['required']")
+            span.error(v-if="($vali.nameFirst.touched && $vali.nameLast.touched) && ($vali.nameFirst.required || $vali.nameLast.required)")  ERORR
+
+          section
+            h2 Checkbox required
+            input(type="checkbox" name="a" v-validate:checkbox="['required']")
+            |  A
+            input(type="checkbox" name="b" v-validate:checkbox)
+            |  B
+            input(type="checkbox" name="c" v-validate:checkbox)
+            |  C
+            span.error(v-if="$vali.checkbox.touched && $vali.checkbox.required")  ERORR
+
+          section
+            h2 Radio required
+            input(type="radio" name="radio" v-validate:radio="['required']")
+            |  Man
+            input(type="radio" name="radio" v-validate:radio)
+            |  Woman
+            p.error(v-if="$vali.radio.touched && $vali.radio.required") ERORR
+
+          section
+            h2 Select required
+            select(name="select" v-validate:select="['required']")
+              option(value="")
+              option(value="001") 001
+              option(value="002") 002
+              option(value="003") 003
+            p.error(v-if="$vali.select.touched && $vali.select.required") ERORR
+
+          input(type="submit" value="Send" v-bind:class="{ 'is-desable': $vali.invalid }")
